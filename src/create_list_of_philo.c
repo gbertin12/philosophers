@@ -7,20 +7,20 @@ t_philo *create_list_of_philo(char **argv)
 
 	philo = malloc(sizeof(*philo));
 	if (!philo)
-		return (NULL);
+		return (msg_err("Error malloc philo\n"));
 	ft_memset(philo, 0, sizeof(t_philo));
     if (!init_list(argv, philo))
-        return (NULL);
+        return (msg_err("Init List error\n"));
 	if (!add_all_philo_to_list(argv, philo))
-		return (NULL);
+		return (msg_err("Add List error\n"));
 	return (philo);
 }
 
 
 int		init_list(char **argv, t_philo *philo)
 {
-	pthread_mutex_t *fork_right = PTHREAD_MUTEX_INITIALIZER;
-	pthread_mutex_t *fork_left = PTHREAD_MUTEX_INITIALIZER;
+	// philo->fork_left = PTHREAD_MUTEX_INITIALIZER;
+	// philo->fork_right = PTHREAD_MUTEX_INITIALIZER;
 
 	philo->num_philo = 1;
 	philo->time_to_die = ft_atoi(argv[2]);
@@ -30,8 +30,8 @@ int		init_list(char **argv, t_philo *philo)
 		philo->nb_times_to_eat = -1;
 	else
 		philo->nb_times_to_eat = ft_atoi(argv[5]);
-	philo->fork_right = fork_right;
-	philo->fork_left = fork_left;
+	pthread_mutex_init(&philo->fork_left, NULL);
+	pthread_mutex_init(&philo->fork_right, NULL);
 	philo->next = NULL;
 	return (1);
 }
@@ -60,7 +60,6 @@ int		add_all_philo_to_list(char **argv, t_philo *philo)
 int	add_philo(char **argv, t_philo *previous_philo, int num_philo)
 {
 	t_philo *new_philo;
-	pthread_mutex_t *fork_left = PTHREAD_MUTEX_INITIALIZER;
 
 	new_philo = malloc(sizeof(*new_philo));
 	if (!new_philo)
@@ -74,17 +73,18 @@ int	add_philo(char **argv, t_philo *previous_philo, int num_philo)
 		new_philo->nb_times_to_eat = -1;
 	else
 		new_philo->nb_times_to_eat = ft_atoi(argv[5]);
-	new_philo->fork_right = previous_philo->fork_left;
-	new_philo->fork_left = fork_left;
+	// new_philo->fork_right = previous_philo->fork_left;
+	// pthread_mutex_init(new_philo->fork_left, NULL);
 	new_philo->next = NULL;
 	previous_philo->next = new_philo;
-	return (0);
+	return (1);
 }
 
 int	add_last_philo(char **argv, t_philo *previous, t_philo *first, int num_philo)
 {
 	t_philo *new_philo;
 
+	(void)first;
 	new_philo = malloc(sizeof(*new_philo));
 	if (!new_philo)
 		return (0);
@@ -97,8 +97,9 @@ int	add_last_philo(char **argv, t_philo *previous, t_philo *first, int num_philo
 		new_philo->nb_times_to_eat = -1;
 	else
 		new_philo->nb_times_to_eat = ft_atoi(argv[5]);
-	new_philo->fork_right = previous->fork_left;
-	new_philo->fork_left = first->fork_right;
+	// new_philo->fork_right = previous->fork_left;
+	// new_philo->fork_left = first->fork_right;
 	new_philo->next = NULL;
 	previous->next = new_philo;
+	return (1);
 }

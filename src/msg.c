@@ -1,39 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   msg.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 08:26:44 by gbertin           #+#    #+#             */
-/*   Updated: 2022/08/12 16:04:40 by gbertin          ###   ########.fr       */
+/*   Created: 2022/08/12 17:14:26 by gbertin           #+#    #+#             */
+/*   Updated: 2022/08/12 17:24:54 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	ft_atoi(const char *str)
+t_philo *msg_err(char *msg)
 {
-	int	i;
-	int	negative;
-	int	val;
-
-	i = 0;
-	negative = 1;
-	val = 0;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
-		|| str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			negative = -1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		val = val * 10 + (str[i] - '0');
-		i++;
-	}
-	return (val * negative);
+    write(1, msg, ft_strlen(msg));
+    return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:34:53 by gbertin           #+#    #+#             */
-/*   Updated: 2022/08/05 14:49:15 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/08/12 18:37:26 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ typedef struct t_philo
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_times_to_eat;
-	pthread_mutex_t	*fork_right;
-	pthread_mutex_t	*fork_left;
+	pthread_mutex_t	fork_right;
+	pthread_mutex_t	fork_left;
 	struct t_philo			*next;
 }           t_philo;
 
@@ -38,7 +38,10 @@ int		init_list(char **argv, t_philo *philo);
 int		add_all_philo_to_list(char **argv, t_philo *philo);
 int		add_philo(char **argv, t_philo *previous_philo, int num_philo);
 int		add_last_philo(char **argv, t_philo *previous, t_philo *first, int num_philo);
+// MSG
+t_philo *msg_err(char *msg);
 // UTILS 
 void	*ft_memset(void *b, int c, size_t len);
 int		ft_atoi(const char *str);
+int		ft_strlen(char *str);
 #endif
