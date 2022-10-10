@@ -6,20 +6,28 @@
 #    By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/04 19:32:13 by gbertin           #+#    #+#              #
-#    Updated: 2022/08/12 17:23:52 by gbertin          ###   ########.fr        #
+#    Updated: 2022/10/07 13:45:04 by gbertin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc 
-FLAGSSAN = -Wall -Wextra -Werror -fsanitize=address
-FLAGS = -Wall -Wextra -Werror 
+FLAGSSAN = -Wall -Wextra -Werror -g3 -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -pthread
 RM = rm -f
-SRCS = main.c \
+SRCS = philo.c \
+		src/check_death.c \
+		src/coroutine.c \
 		src/create_list_of_philo.c \
+		src/create_threads.c \
+		src/free_all.c \
+		src/get_timestamp.c \
+		src/init_coroutine.c \
 		src/parsing.c \
 		src/msg.c \
+		utils/check_int.c \
 		utils/ft_atoi.c \
+		utils/ft_isdigit.c \
 		utils/ft_strlen.c \
 		utils/ft_memset.c 
 
