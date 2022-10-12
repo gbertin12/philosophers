@@ -6,7 +6,7 @@
 #    By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/04 19:32:13 by gbertin           #+#    #+#              #
-#    Updated: 2022/10/07 13:45:04 by gbertin          ###   ########.fr        #
+#    Updated: 2022/10/12 18:49:13 by gbertin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS = philo.c \
 		src/free_all.c \
 		src/get_timestamp.c \
 		src/init_coroutine.c \
-		src/parsing.c \
+		src/init_var.c \
 		src/msg.c \
 		utils/check_int.c \
 		utils/ft_atoi.c \

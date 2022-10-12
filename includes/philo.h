@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:34:53 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/11 22:46:21 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/12 18:58:16 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ typedef struct t_general
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_times_to_eat;
+	int				*nb_ate;
+	int				start;
+	int				nb_philo;
+	pthread_mutex_t *eat;
 	pthread_mutex_t *write;
 	pthread_mutex_t	*dead;
 }			t_general;
