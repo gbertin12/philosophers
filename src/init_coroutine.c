@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 10:56:08 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/08 20:23:17 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/11 22:09:10 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ void	*coroutine_philo(void *data)
 	philo = (t_philo *)data;
 	i = 0;
 	if (philo->num_philo == 1)
-	{
 		philo->general->time_start = get_timestamp();
-		printf(" START = %lld\n", philo->general->time_start);
-	}
 	philo->last_eat = get_timestamp();
 	while (!check_death(philo) 
 	&& (philo->general->nb_times_to_eat == -1 || philo->general->nb_times_to_eat > i))

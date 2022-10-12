@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:34:53 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/08 19:40:06 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/11 22:46:21 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	check_death(t_philo *philo);
 
 // GET TIMESTAMP
 long long	get_timestamp();
-int			wait_activity(int time, t_philo *philo);
+int			wait_sleep(int time, t_philo *philo);
+int			wait_eat(int time, t_philo *philo);
 
 //CREATE THREADS
 pthread_t	*create_threads(t_philo *philo, int nb_philo);
