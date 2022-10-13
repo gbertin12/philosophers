@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 09:47:27 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/13 11:44:23 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/13 12:18:22 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	coroutine_take_forks1(t_philo *philo)
 	if (!philo->fork_left)
 	{
 		pthread_mutex_unlock(philo->fork_right);
-		wait_sleep(philo->general->time_to_die, philo);
+		if (wait_sleep(philo->general->time_to_die, philo))
+			return (1);
 	}
 	pthread_mutex_lock(philo->fork_left);
 	print_msg("has taken a fork", philo);
