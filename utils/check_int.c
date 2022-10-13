@@ -6,13 +6,13 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 06:48:40 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/07 07:23:15 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/13 11:33:59 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static int check_int(int i, char *nbr, char *max)
+static int	check_int(int i, char *nbr, char *max)
 {
 	while (nbr[i] == '0' && nbr[i + 1] != 0)
 	{
@@ -36,8 +36,8 @@ static int check_int(int i, char *nbr, char *max)
 
 int	check_max_int(char *nbr)
 {
-	char *max;
-	int i;
+	char	*max;
+	int		i;
 
 	i = 0;
 	max = "2147483647";

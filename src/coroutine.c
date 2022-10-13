@@ -6,32 +6,23 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 09:47:27 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/12 22:05:53 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/13 11:44:23 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	print_msg(char *msg, t_philo *philo)
-{
-	pthread_mutex_lock(philo->general->write);
-	if (!check_death(philo))
-		printf("%lldms %d %s\n",
-			get_timestamp() - philo->general->time_start, philo->num_philo, msg);
-	pthread_mutex_unlock(philo->general->write);
-}
-
 int	coroutine_to_die(t_philo *philo)
 {
-	int duration;
+	int	duration;
 
 	duration = get_timestamp() - philo->last_eat;
 	if (duration > philo->general->time_to_die)
 	{
 		print_msg("died", philo);
-		pthread_mutex_lock(philo->general->dead);
+		pthread_mutex_lock(&philo->general->dead);
 		philo->general->death = 1;
-		pthread_mutex_unlock(philo->general->dead);
+		pthread_mutex_unlock(&philo->general->dead);
 		return (1);
 	}
 	return (0);
@@ -76,7 +67,7 @@ int	coroutine_take_forks2(t_philo *philo)
 	return (0);
 }
 
-int	coroutine_to_eat (t_philo *philo)
+int	coroutine_to_eat(t_philo *philo)
 {
 	if (coroutine_to_die(philo))
 		return (1);
@@ -93,7 +84,7 @@ int	coroutine_to_eat (t_philo *philo)
 	return (0);
 }
 
-int	coroutine_to_sleep (t_philo *philo)
+int	coroutine_to_sleep(t_philo *philo)
 {
 	if (coroutine_to_die(philo))
 		return (1);
@@ -103,6 +94,6 @@ int	coroutine_to_sleep (t_philo *philo)
 	if (coroutine_to_die(philo))
 		return (1);
 	print_msg("is thinking", philo);
-	usleep(50);
+	usleep(20);
 	return (0);
 }

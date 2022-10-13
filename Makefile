@@ -6,14 +6,14 @@
 #    By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/04 19:32:13 by gbertin           #+#    #+#              #
-#    Updated: 2022/10/12 18:49:13 by gbertin          ###   ########.fr        #
+#    Updated: 2022/10/13 10:16:46 by gbertin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc 
-FLAGSSAN = -Wall -Wextra -Werror -g3 -fsanitize=address
-FLAGS = -Wall -Wextra -Werror -pthread
+FLAGSSAN = -Wall -Wextra -Werror  -pthread -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -pthread -g3
 RM = rm -f
 SRCS = philo.c \
 		src/check_death.c \
@@ -38,7 +38,7 @@ OBJ=$(SRCS:.c=.o)
 all: $(NAME)
 
 %.o: %.c $(HEAD)
-		$(CC) $(FLAGS) -c $< -o ${<:.c=.o}
+		$(CC) $(FLAGS)  -c $< -o ${<:.c=.o}
 
 $(NAME):$(OBJ) $(HEAD)
 		$(CC) $(FLAGS) $(OBJ) -o $(NAME)
