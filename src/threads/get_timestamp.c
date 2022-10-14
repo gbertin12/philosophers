@@ -6,11 +6,11 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:44:19 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/13 11:30:25 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/14 12:04:09 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../../includes/philo.h"
 
 long long	get_timestamp(void)
 {
@@ -24,17 +24,9 @@ long long	get_timestamp(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-int	wait_eat(int time, t_philo *philo)
+int	wait_eat(int time)
 {
-	long long	start;
-
-	start = get_timestamp();
-	while (!check_death(philo))
-	{
-		if (get_timestamp() - start > time)
-			return (0);
-		usleep(20);
-	}
+	usleep(time * 1000);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:28:18 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/13 11:41:33 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/14 10:25:42 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ static int	init_general(char **argv, t_philo *philo)
 	if (!general)
 		return (1);
 	ft_memset(general, 0, sizeof(t_general));
+	philo->general = general;
 	if (init_general_mutex(general))
 		return (1);
 	init_rules(argv, general);
 	if (general->time_to_die < 1 || general->time_to_eat < 1 || !general->nb_ate
 		|| general->time_to_sleep < 1 || general->nb_philo < 1)
 		return (1);
-	philo->general = general;
 	return (0);
 }
 

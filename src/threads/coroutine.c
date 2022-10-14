@@ -6,18 +6,18 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 09:47:27 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/13 12:18:22 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/14 12:55:41 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../../includes/philo.h"
 
 int	coroutine_to_die(t_philo *philo)
 {
 	int	duration;
 
 	duration = get_timestamp() - philo->last_eat;
-	if (duration > philo->general->time_to_die)
+	if (duration >= philo->general->time_to_die)
 	{
 		print_msg("died", philo);
 		pthread_mutex_lock(&philo->general->dead);
@@ -30,8 +30,6 @@ int	coroutine_to_die(t_philo *philo)
 
 int	coroutine_take_forks1(t_philo *philo)
 {
-	if (coroutine_to_die(philo))
-		return (1);
 	pthread_mutex_lock(philo->fork_right);
 	print_msg("has taken a fork", philo);
 	if (!philo->fork_left)
@@ -53,8 +51,6 @@ int	coroutine_take_forks1(t_philo *philo)
 
 int	coroutine_take_forks2(t_philo *philo)
 {
-	if (coroutine_to_die(philo))
-		return (1);
 	pthread_mutex_lock(philo->fork_left);
 	print_msg("has taken a fork", philo);
 	pthread_mutex_lock(philo->fork_right);
@@ -73,12 +69,7 @@ int	coroutine_to_eat(t_philo *philo)
 	if (coroutine_to_die(philo))
 		return (1);
 	print_msg("is eating", philo);
-	if (wait_eat(philo->general->time_to_eat, philo))
-	{
-		pthread_mutex_unlock(philo->fork_left);
-		pthread_mutex_unlock(philo->fork_right);
-		return (1);
-	}
+	wait_eat(philo->general->time_to_eat);
 	pthread_mutex_unlock(philo->fork_left);
 	pthread_mutex_unlock(philo->fork_right);
 	philo->last_eat = get_timestamp();

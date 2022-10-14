@@ -6,13 +6,13 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 07:47:28 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/13 12:19:00 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/14 11:36:12 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static int	lauch_creating(t_philo *begin)
+static int	launch_creating(t_philo *begin)
 {
 	t_philo			*philo;
 
@@ -44,10 +44,10 @@ static void	join_threads(t_philo *begin)
 int	create_threads(t_philo *begin)
 {
 	pthread_mutex_lock(&begin->general->start);
-	if (lauch_creating(begin))
+	if (launch_creating(begin))
 		return (1);
-	pthread_mutex_unlock(&begin->general->start);
 	begin->general->time_start = get_timestamp();
+	pthread_mutex_unlock(&begin->general->start);
 	join_threads(begin);
 	return (0);
 }

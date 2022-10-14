@@ -6,7 +6,7 @@
 #    By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/04 19:32:13 by gbertin           #+#    #+#              #
-#    Updated: 2022/10/13 10:16:46 by gbertin          ###   ########.fr        #
+#    Updated: 2022/10/14 10:23:07 by gbertin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,20 +16,20 @@ FLAGSSAN = -Wall -Wextra -Werror  -pthread -fsanitize=address
 FLAGS = -Wall -Wextra -Werror -pthread -g3
 RM = rm -f
 SRCS = philo.c \
-		src/check_death.c \
-		src/coroutine.c \
+		src/threads/check_death.c \
+		src/threads/coroutine.c \
+		src/threads/get_timestamp.c \
+		src/threads/launch_coroutine.c \
 		src/create_list_of_philo.c \
 		src/create_threads.c \
-		src/free_all.c \
-		src/get_timestamp.c \
-		src/init_coroutine.c \
 		src/init_var.c \
-		src/msg.c \
 		utils/check_int.c \
+		utils/free_all.c \
 		utils/ft_atoi.c \
 		utils/ft_isdigit.c \
 		utils/ft_strlen.c \
-		utils/ft_memset.c 
+		utils/ft_memset.c \
+		utils/msg.c 
 
 HEAD = includes/philo.h 
 
