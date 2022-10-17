@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 07:30:45 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/14 10:23:31 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/17 18:04:18 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	free_threads(t_philo *begin)
 		tmp = philo;
 		if (tmp->fork_left)
 		{
-			pthread_mutex_destroy(tmp->fork_left);
+			pthread_mutex_destroy(&tmp->fork_left->fork);
 			free(philo->fork_left);
 		}
 		philo = tmp->next;
@@ -51,12 +51,12 @@ void	free_all(t_philo *philo)
 		return ;
 	if (philo->fork_left)
 	{
-		pthread_mutex_destroy(philo->fork_left);
+		pthread_mutex_destroy(&philo->fork_left->fork);
 		free(philo->fork_left);
 	}
 	if (philo->fork_right)
 	{
-		pthread_mutex_destroy(philo->fork_right);
+		pthread_mutex_destroy(&philo->fork_right->fork);
 		free(philo->fork_right);
 	}
 	free_threads(philo->next);

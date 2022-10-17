@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:44:19 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/14 12:04:09 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/17 16:25:45 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,7 @@ long long	get_timestamp(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-int	wait_eat(int time)
-{
-	usleep(time * 1000);
-	return (1);
-}
-
-int	wait_sleep(int time, t_philo *philo)
+int	wait_action(int time, t_philo *philo)
 {
 	long long	start;
 
@@ -39,7 +33,20 @@ int	wait_sleep(int time, t_philo *philo)
 	{
 		if (get_timestamp() - start > time)
 			return (0);
-		usleep(20);
+		usleep(1000);
 	}
 	return (1);
+}
+
+void	init_start(t_philo *philo)
+{
+	struct timeval	time;
+	
+	gettimeofday(&time, NULL);
+	philo->general->time_start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	while (philo->general->time_start % 1000 != 0)
+	{
+		philo->general->time_start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+		gettimeofday(&time, NULL);
+	}
 }

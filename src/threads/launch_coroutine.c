@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 10:56:08 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/14 12:37:21 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/17 18:29:06 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,15 @@ int	check_all_philo_eat(t_general *general, t_philo *philo)
 	return (0);
 }
 
-static void	coroutine(t_philo *philo)
+static int	coroutine(t_philo *philo)
 {
-	if (coroutine_to_die(philo))
-		return ;
-	if (philo->num_philo % 2)
-	{
-		if (coroutine_take_forks1(philo))
-			return ;
-	}
-	else
-	{
-		if (coroutine_take_forks2(philo))
-			return ;
-	}
+	if (coroutine_take_forks(philo))
+		return (1);
 	if (coroutine_to_eat(philo))
-		return ;
+		return (1);
 	if (coroutine_to_sleep(philo))
-		return ;
-	return ;
+		return (1);
+	return (1);
 }
 
 void	*coroutine_philo(void *data)
@@ -64,15 +54,14 @@ void	*coroutine_philo(void *data)
 	pthread_mutex_lock(&philo->general->start);
 	pthread_mutex_unlock(&philo->general->start);
 	philo->last_eat = get_timestamp();
-	if (philo->num_philo != 1 && philo->num_philo % 2)
-		usleep(1000);
-	else if (philo->num_philo != 1)
-		usleep(500);
+	if (philo->num_philo % 2)
+		usleep(10000);
 	while (!check_death(philo)
 		&& (philo->general->nb_times_to_eat == -1
 			|| check_all_philo_eat(philo->general, philo)))
 	{
-		coroutine(philo);
+		if (coroutine(philo))
+			continue ;
 		pthread_mutex_lock(&philo->general->eat);
 		philo->general->nb_ate[philo->num_philo - 1] += 1;
 		pthread_mutex_unlock(&philo->general->eat);

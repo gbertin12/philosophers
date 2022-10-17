@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:28:18 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/14 10:25:42 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/17 17:57:51 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,27 +69,29 @@ static int	init_general(char **argv, t_philo *philo)
 	init_rules(argv, general);
 	if (general->time_to_die < 1 || general->time_to_eat < 1 || !general->nb_ate
 		|| general->time_to_sleep < 1 || general->nb_philo < 1)
-		return (1);
+		return (2);
 	return (0);
 }
 
 int	init_list(char **argv, t_philo *philo)
 {
-	if (init_general(argv, philo))
-		return (1);
+	int	err;
+
+	err = init_general(argv, philo);
+	if (err == 2)
+		return (err);
+	else if (err)
+		return (err);
 	if (philo->general->nb_philo > 1)
 	{
-		philo->fork_left = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+		philo->fork_left = create_fork();
 		if (!philo->fork_left)
 			return (1);
 	}
-	philo->fork_right = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	philo->fork_right = create_fork();
 	if (!philo->fork_right)
 		return (1);
 	philo->num_philo = 1;
-	pthread_mutex_init(philo->fork_right, NULL);
-	if (philo->general->nb_philo > 1)
-		pthread_mutex_init(philo->fork_left, NULL);
 	philo->next = NULL;
 	return (0);
 }

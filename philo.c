@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:32:08 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/13 11:36:29 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/14 15:35:04 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,9 @@ int	main(int argc, char **argv)
 {
 	t_philo	*philo;
 
-	if (argc < 5 || argc > 6)
-		return (1);
-	if (check_entry(argc, argv))
+	if (argc < 5 || argc > 6 || check_entry(argc, argv))
 	{
-		write(2, "Error Parsing\n", 15);
+		write(2, "Parsing Error\n", 15);
 		return (1);
 	}
 	philo = create_list_of_philo(argv);

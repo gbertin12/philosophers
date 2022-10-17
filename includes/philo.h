@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:34:53 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/14 12:04:17 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/17 18:27:18 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <sys/time.h>
+
+typedef struct t_fork
+{
+	pthread_mutex_t	fork;
+	int				lock;
+	
+}				t_fork;
 
 typedef struct t_general
 {
@@ -40,8 +47,8 @@ typedef struct t_philo
 	pthread_t		thread_id;
 	long long		last_eat;
 	int				num_philo;
-	pthread_mutex_t	*fork_right;
-	pthread_mutex_t	*fork_left;
+	t_fork			*fork_right;
+	t_fork			*fork_left;
 	t_general		*general;
 	struct t_philo	*next;
 }				t_philo;
@@ -61,17 +68,23 @@ int			check_death(t_philo *philo);
 
 // GET TIMESTAMP
 long long	get_timestamp(void);
-int			wait_sleep(int time, t_philo *philo);
-int			wait_eat(int time);
+int			wait_action(int time, t_philo *philo);
 
 //CREATE THREADS
 int			create_threads(t_philo *philo);
+void		init_start(t_philo *philo);
+t_fork		*create_fork();
+
+//HANDLE FORK
+int		lock_fork_right(t_philo *philo);
+int		lock_fork_left(t_philo *philo);
+int		unlock_fork_right(t_philo *philo);
+int		unlock_fork_left(t_philo *philo);
 
 // COROUTINE
 void		*coroutine_philo(void *data);
 int			coroutine_to_die(t_philo *philo);
-int			coroutine_take_forks1(t_philo *philo);
-int			coroutine_take_forks2(t_philo *philo);
+int			coroutine_take_forks(t_philo *philo);
 int			coroutine_to_eat(t_philo *philo);
 int			coroutine_to_sleep(t_philo *philo);
 //FREE
@@ -83,4 +96,5 @@ int			ft_atoi(const char *str);
 int			check_max_int(char *nbr);
 int			ft_strlen(char *str);
 int			ft_isdigit(int c);
+char		*ft_lltoa(long long n);
 #endif

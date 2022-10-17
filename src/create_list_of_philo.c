@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 09:42:44 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/13 11:32:23 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/17 17:58:28 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,17 @@
 t_philo	*create_list_of_philo(char **argv)
 {
 	t_philo	*philo;
+	int		err;
 
 	philo = malloc(sizeof(*philo));
 	if (!philo)
 		return (msg_err("Error malloc philo\n", philo));
 	ft_memset(philo, 0, sizeof(t_philo));
-	if (init_list(argv, philo))
+	err = init_list(argv, philo);
+	if (err == 1)
 		return (msg_err("Init List error\n", philo));
+	else if (err == 2)
+		return (msg_err("Parsing Error\n", philo));
 	if (!add_all_philo_to_list(philo))
 		return (msg_err("Add List error\n", philo));
 	return (philo);
@@ -56,13 +60,12 @@ int	add_philo(t_philo *previous_philo, int num_philo)
 	if (!new_philo)
 		return (1);
 	ft_memset(new_philo, 0, sizeof(t_philo));
-	new_philo->fork_left = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	new_philo->fork_left = create_fork();
 	if (!new_philo->fork_left)
 		return (1);
 	new_philo->num_philo = num_philo;
 	new_philo->general = previous_philo->general;
 	new_philo->fork_right = previous_philo->fork_left;
-	pthread_mutex_init(new_philo->fork_left, NULL);
 	new_philo->next = NULL;
 	previous_philo->next = new_philo;
 	return (0);

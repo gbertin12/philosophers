@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 07:47:28 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/14 11:36:12 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/17 18:31:34 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,10 @@ static void	join_threads(t_philo *begin)
 int	create_threads(t_philo *begin)
 {
 	pthread_mutex_lock(&begin->general->start);
+	//begin->general->time_start = get_timestamp();
 	if (launch_creating(begin))
 		return (1);
-	begin->general->time_start = get_timestamp();
+	init_start(begin);
 	pthread_mutex_unlock(&begin->general->start);
 	join_threads(begin);
 	return (0);
