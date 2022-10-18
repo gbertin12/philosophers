@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:44:19 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/17 22:50:14 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/17 23:24:34 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ int	wait_action(int time, t_philo *philo)
 	long long	next_death;
 
 	start = get_timestamp();
-	next_death = get_timestamp() - philo->last_eat + philo->general->time_to_die;
+	next_death = philo->general->time_to_die - (get_timestamp() - philo->last_eat);
 	// printf("timestamp %lld  last eat %lld\n", get_timestamp(), philo->last_eat);
 	// printf("next death = %lld || end action %d soustraction %lld\n", next_death, time, next_death - philo->general->time_to_die);
-	if (next_death >= philo->general->time_to_die)
+	//printf("next death %lld time to die %d\n", next_death, philo->general->time_to_die);
+	if (next_death < time)
 	{
-		printf("DEAD\n");
 		while (!check_death(philo) && !coroutine_to_die(philo))
 		{
 			if (get_timestamp() - start > time)
@@ -49,7 +49,6 @@ int	wait_action(int time, t_philo *philo)
 		usleep(time * 1000);
 		return (0);
 	}
-	
 	return (1);
 }
 
