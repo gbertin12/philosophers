@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:34:53 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/17 18:27:18 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/18 17:17:10 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ typedef struct t_general
 	int				time_to_sleep;
 	int				nb_times_to_eat;
 	int				*nb_ate;
-	pthread_mutex_t	start;
 	int				nb_philo;
+	t_fork			*forks;
+	t_philo			*philos;
+	pthread_mutex_t	start;
 	pthread_mutex_t	eat;
 	pthread_mutex_t	write;
 	pthread_mutex_t	dead;
@@ -44,14 +46,33 @@ typedef struct t_general
 
 typedef struct t_philo
 {
-	pthread_t		thread_id;
 	long long		last_eat;
 	int				num_philo;
-	t_fork			*fork_right;
-	t_fork			*fork_left;
+	int				fork_left;
+	int				fork_right;
 	t_general		*general;
-	struct t_philo	*next;
 }				t_philo;
+
+
+t_general *init_general(char **argv, t_general *general)
+
+
+// MSG
+t_philo		*msg_err(char *msg, t_general *general);
+void		print_msg(char *msg, t_philo *philo);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // CREATE PHILO LIST
 t_philo		*create_list_of_philo(char **argv);
@@ -59,9 +80,6 @@ int			init_list(char **argv, t_philo *philo);
 int			add_all_philo_to_list(t_philo *philo);
 int			add_philo(t_philo *previous_philo, int num_philo);
 int			add_last_philo(t_philo *previous, t_philo *first, int num_philo);
-// MSG
-t_philo		*msg_err(char *msg, t_philo *begin);
-void		print_msg(char *msg, t_philo *philo);
 
 //CHECK DEATH
 int			check_death(t_philo *philo);
@@ -97,4 +115,5 @@ int			check_max_int(char *nbr);
 int			ft_strlen(char *str);
 int			ft_isdigit(int c);
 char		*ft_lltoa(long long n);
+
 #endif

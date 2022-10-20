@@ -6,15 +6,15 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:14:26 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/17 16:52:21 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/18 16:35:37 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-t_philo	*msg_err(char *msg, t_philo *begin)
+t_philo	*msg_err(char *msg, t_philo *general)
 {
-	free_all(begin);
+	free_all(general);
 	write(1, msg, ft_strlen(msg));
 	return (NULL);
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   launch_coroutine.c                                 :+:      :+:    :+:   */
+/*   coroutine.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 10:56:08 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/18 22:02:39 by gbertin          ###   ########.fr       */
+/*   Created: 2022/10/18 17:27:19 by gbertin           #+#    #+#             */
+/*   Updated: 2022/10/18 22:03:02 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philo.h"
+#include "../includes/philo.h"
 
 int	check_all_philo_eat(t_general *general, t_philo *philo)
 {
@@ -33,41 +33,43 @@ int	check_all_philo_eat(t_general *general, t_philo *philo)
 	return (0);
 }
 
-static int	coroutine(t_philo *philo)
+static int	coroutine_to_forks(t_philo *philo)
 {
-	if (coroutine_to_die(philo))
-		return (1);
-	if (coroutine_take_forks(philo))
-		return (1);
-	if (coroutine_to_eat(philo))
-		return (1);
-	if (coroutine_to_sleep(philo))
-		return (1);
-	return (0);
+	
+}
+
+static int	coroutine_to_eat(t_philo *philo)
+{
+	
+}
+
+static int	coroutine_to_sleep_think(t_philo *philo)
+{
+	
 }
 
 void	*coroutine_philo(void *data)
 {
-	t_philo	*philo;
-	int		i;
+	t_philo *philo;
 
 	philo = (t_philo *)data;
-	i = 0;
 	pthread_mutex_lock(&philo->general->start);
 	pthread_mutex_unlock(&philo->general->start);
-	philo->last_eat = get_timestamp();
 	if (philo->num_philo % 2)
-		usleep(philo->general->time_to_eat * 1000);
-	while (!check_death(philo)
-		&& (philo->general->nb_times_to_eat == -1
+		usleep(philo->general->time_to_eat - 10);
+	philo->last_eat == get_timestamp();
+	while (check_death(philo) && (philo->general->nb_times_to_eat == -1
 			|| check_all_philo_eat(philo->general, philo)))
 	{
-		if (coroutine(philo))
+		if (coroutine_take_forks(philo))
 			continue ;
+		if (coroutine_to_eat(philo))
+			continue ;
+		if (coroutine_to_sleep_think(philo))
+			continue ;		
 		pthread_mutex_lock(&philo->general->eat);
 		philo->general->nb_ate[philo->num_philo - 1] += 1;
 		pthread_mutex_unlock(&philo->general->eat);
-		i++;
 	}
-	return (NULL);
+	return ;
 }
