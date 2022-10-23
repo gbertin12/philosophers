@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/04 19:32:08 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/14 15:35:04 by gbertin          ###   ########.fr       */
+/*   Created: 2022/10/18 16:29:41 by gbertin           #+#    #+#             */
+/*   Updated: 2022/10/22 20:00:08 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,18 @@ int	check_entry(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	t_philo	*philo;
+	t_general	*general;
 
+	general = NULL;
 	if (argc < 5 || argc > 6 || check_entry(argc, argv))
 	{
 		write(2, "Parsing Error\n", 15);
 		return (1);
 	}
-	philo = create_list_of_philo(argv);
-	if (!philo)
+	general = init_general(argv, general);
+	if (!general)
 		return (1);
-	create_threads(philo);
-	free_all(philo);
+	launch_thread(general);
+	free_all(general);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:25:42 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/18 17:24:08 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/23 07:38:51 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static int	init_fork(t_general *general)
 	{
 		ft_memset(&general->forks[i], 0, sizeof(t_fork));
 		pthread_mutex_init(&general->forks[i].fork, NULL);
+		pthread_mutex_init(&general->forks[i].is_lock, NULL);
 		i++;
 	}
 	return (0);
@@ -76,7 +77,7 @@ static int	init_philo(t_general *general)
 		return (1);
 	while (i < general->nb_philo)
 	{
-		memset(&general->philos[i], 0, sizeof(t_philo));
+		ft_memset(&general->philos[i], 0, sizeof(t_philo));
 		general->philos[i].fork_left = i;
 		general->philos[i].fork_right = (i + 1) % general->nb_philo;
 		general->philos[i].last_eat = 0;
@@ -91,15 +92,15 @@ t_general *init_general(char **argv, t_general *general)
 {
 	general = malloc(sizeof(*general));
 	if (!general)
-		return (1);
+		return (NULL);
 	ft_memset(general, 0, sizeof(t_general));
-	if (!pthread_mutex_init(&general->start, NULL))
+	if (pthread_mutex_init(&general->start, NULL))
 		return(msg_err("Init Error Start", general));
-	if (!pthread_mutex_init(&general->write, NULL))
+	if (pthread_mutex_init(&general->write, NULL))
 		return(msg_err("Init Error Write", general));
-	if (!pthread_mutex_init(&general->dead, NULL))
+	if (pthread_mutex_init(&general->dead, NULL))
 		return(msg_err("Init Error Dead", general));
-	if (!pthread_mutex_init(&general->eat, NULL))
+	if (pthread_mutex_init(&general->eat, NULL))
 		return(msg_err("Init Error Eat", general));
 	if (init_rules(argv, general))
 		return (msg_err("Error Parsing", general));

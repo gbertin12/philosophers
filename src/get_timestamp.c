@@ -6,11 +6,11 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:44:19 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/18 22:11:53 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/23 07:16:59 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philo.h"
+#include "../includes/philo.h"
 
 long long	get_timestamp(void)
 {
@@ -24,6 +24,13 @@ long long	get_timestamp(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
+void	wait_to_die(t_philo *philo)
+{
+	while (get_timestamp() - philo->last_eat < philo->general->time_to_die)
+		usleep(500);
+	coroutine_to_die(philo);
+}
+
 int	wait_action(int time, t_philo *philo)
 {
 	long long	start;
@@ -31,16 +38,13 @@ int	wait_action(int time, t_philo *philo)
 
 	start = get_timestamp();
 	next_death = philo->general->time_to_die - (get_timestamp() - philo->last_eat);
-	if (next_death < time)
+	if (next_death > time)
 	{
-		while (!check_death(philo) && !coroutine_to_die(philo))
-		{
-			if (get_timestamp() - start > time)
-				return (0);
+		while (get_timestamp() - start < time)
 			usleep(500);
-		}
-		return (1);
+		return (0);
 	}
+	wait_to_die(philo);
 	return (1);
 }
 

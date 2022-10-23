@@ -6,7 +6,7 @@
 #    By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/04 19:32:13 by gbertin           #+#    #+#              #
-#    Updated: 2022/10/17 18:14:06 by gbertin          ###   ########.fr        #
+#    Updated: 2022/10/22 09:22:46 by gbertin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,12 @@ CC = cc
 FLAGS = -Wall -Wextra -Werror -pthread
 RM = rm -f
 SRCS = philo.c \
-		src/threads/check_death.c \
-		src/threads/coroutine.c \
-		src/threads/get_timestamp.c \
-		src/threads/launch_coroutine.c \
-		src/create_list_of_philo.c \
-		src/handle_fork.c \
-		src/create_threads.c \
-		src/init_var.c \
+		src/check_death.c\
+		src/coroutine.c\
+		src/get_timestamp.c\
+		src/handle_fork.c\
+		src/init.c\
+		src/launch_thread.c\
 		utils/check_int.c \
 		utils/free_all.c \
 		utils/ft_atoi.c \

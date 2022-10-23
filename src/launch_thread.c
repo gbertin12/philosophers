@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:18:20 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/18 17:34:36 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/23 07:17:31 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	launch_thread(t_general *general)
 	pthread_t	*tid;
 
 	i = 0;
-	tid = malloc(sizeof(pthread_t) *general->nb_philo);
-	if (tid)
+	tid = malloc(sizeof(pthread_t) * general->nb_philo);
+	if (!tid)
 		return (1);
 	pthread_mutex_lock(&general->start);
 	while (i < general->nb_philo)
