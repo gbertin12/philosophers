@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:27:19 by gbertin           #+#    #+#             */
-/*   Updated: 2022/10/23 07:36:26 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/10/23 20:28:46 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ static int	check_all_philo_eat(t_general *general, t_philo *philo)
 
 static int	coroutine_to_forks(t_philo *philo)
 {
+	if (get_timestamp() - philo->last_eat >= philo->general->time_to_die)
+	{
+		wait_to_die(philo);
+		return (1);
+	}
 	if (lock_fork_right(philo))
 		return (1);
 	if (philo->general->forks[philo->fork_left].lock)
@@ -98,9 +103,12 @@ void	*coroutine_philo(void *data)
 			continue ;
 		if (coroutine_to_sleep_think(philo))
 			continue ;
-		pthread_mutex_lock(&philo->general->eat);
-		philo->general->nb_ate[philo->num_philo - 1] += 1;
-		pthread_mutex_unlock(&philo->general->eat);
+		if (philo->general->nb_times_to_eat != -1)
+		{
+			pthread_mutex_lock(&philo->general->eat);	
+			philo->general->nb_ate[philo->num_philo - 1] += 1;
+			pthread_mutex_unlock(&philo->general->eat);
+		}
 	}
 	return (NULL);
 }

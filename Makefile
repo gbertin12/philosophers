@@ -6,7 +6,7 @@
 #    By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/04 19:32:13 by gbertin           #+#    #+#              #
-#    Updated: 2022/10/22 09:22:46 by gbertin          ###   ########.fr        #
+#    Updated: 2022/10/23 07:47:54 by gbertin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ OBJ=$(SRCS:.c=.o)
 all: $(NAME)
 
 %.o: %.c $(HEAD)
-		$(CC) $(FLAGS)  -c $< -o ${<:.c=.o}
+		$(CC) $(FLAGS) -c $< -o ${<:.c=.o}
 
 $(NAME):$(OBJ) $(HEAD)
 		$(CC) $(FLAGS) $(OBJ) -o $(NAME)
